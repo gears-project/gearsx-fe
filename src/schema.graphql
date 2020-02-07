@@ -1,0 +1,157 @@
+schema {
+  query: QueryRoot
+  mutation: MutationRoot
+}
+
+input AddStringAttributeToEntity {
+  projectId: Uuid!
+  domainId: Uuid!
+  entityId: Int!
+  name: String!
+  default: String
+}
+
+type Attribute {
+  id: Int!
+  name: String!
+  vtype: VType!
+  validations: [Validation!]!
+}
+
+type DocumentReference {
+  id: Uuid!
+  doctype: String!
+}
+
+type Domain {
+  events: Events!
+  entities: [Entity!]!
+}
+
+input DomainAddEntityInput {
+  name: String!
+  projectId: Uuid!
+  domainId: Uuid!
+}
+
+type DomainDocument {
+  id: Uuid!
+  name: String!
+  doctype: String!
+  body: Domain!
+}
+
+input DomainInput {
+  name: String!
+  description: String
+  projectId: Uuid!
+}
+
+type Entity {
+  id: Int!
+  name: String!
+  attributes: [Attribute!]!
+  references: [Reference!]!
+}
+
+type Events {
+  change: [DocumentReference!]!
+  update: [DocumentReference!]!
+  read: [DocumentReference!]!
+  delete: [DocumentReference!]!
+  all: [DocumentReference!]!
+}
+
+input ModelInput {
+  name: String!
+  description: String
+  projectId: Uuid!
+}
+
+type Modelx {
+  id: Int!
+}
+
+type ModelxDocument {
+  id: Uuid!
+  name: String!
+  doctype: String!
+  body: Modelx!
+  domains: [DomainDocument!]!
+}
+
+type MutationRoot {
+  initNewProject(project: ProjectInput!): Project!
+  createProject(project: ProjectInput!): Project!
+  addDomain(domain: DomainInput!): DomainDocument!
+  addModel(input: ModelInput!): ModelxDocument!
+  domainAddEntity(input: DomainAddEntityInput!): Entity!
+  entityAddStringAttribute(input: AddStringAttributeToEntity!): Attribute!
+  deleteProject(input: ProjectIdInput!): Int!
+}
+
+type Project {
+  id: Uuid!
+  name: String!
+  description: String!
+  model: ModelxDocument
+}
+
+input ProjectIdInput {
+  projectId: Uuid!
+}
+
+input ProjectInput {
+  name: String!
+  description: String
+}
+
+input QueryPage {
+  limit: Int
+  offset: Int
+}
+
+type QueryRoot {
+  """List of all projects"""
+  projects(paging: QueryPage): [Project!]!
+
+  """List of all domain documents"""
+  domains(project: ProjectIdInput!): [DomainDocument!]!
+}
+
+type Reference {
+  id: Int!
+  name: String!
+  reftype: ReferenceType!
+  other: String!
+}
+
+enum ReferenceType {
+  HAS_MANY
+  BELONGS_TO
+}
+
+type string {
+  default: String
+}
+
+"""Uuid"""
+scalar Uuid
+
+type Validation {
+  message: String!
+  xflow: DocumentReference!
+}
+
+union VType = string | VTypeBoolean | VTypeInteger
+
+type VTypeBoolean {
+  default: Boolean
+}
+
+type VTypeInteger {
+  default: Int
+  min: Int
+  max: Int
+}
+
