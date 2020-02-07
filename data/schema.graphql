@@ -1,0 +1,14 @@
+schema {
+  query: QueryRoot
+  mutation: QueryRoot
+}
+
+type Attribute {
+  id: Int!
+}
+
+type QueryRoot {
+  projects: [Attribute!]!
+
+}
+
