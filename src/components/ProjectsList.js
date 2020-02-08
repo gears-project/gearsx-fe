@@ -4,7 +4,7 @@ import { gql } from 'apollo-boost';
 
 const PROJECTS_LIST = gql`
 query getProjects {
-  projects(paging:{limit:3}) {
+  projects(paging:{limit:20}) {
     id
     name
     model {
