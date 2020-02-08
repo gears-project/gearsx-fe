@@ -6,14 +6,16 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import ApolloClient from 'apollo-boost';
-import { gql } from "apollo-boost";
+import { ApolloProvider } from '@apollo/react-hooks';
 
 const client = new ApolloClient({
-  uri: 'http://gearsx.local/graphql',
-  // uri: '/graphql',
+  // uri: 'http://gearsx.local/graphql',
+  uri: '/graphql',
 });
 
 
+/*
+import { gql } from "apollo-boost";
 client
   .query({
     query: gql`
@@ -26,8 +28,15 @@ client
     `
   })
   .then(result => console.log(result));
+*/
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const TopLevelApp = () => (
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>
+);
+
+ReactDOM.render(<TopLevelApp />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
