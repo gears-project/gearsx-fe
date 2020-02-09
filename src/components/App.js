@@ -3,10 +3,12 @@ import '../styles/App.css';
 import { Nav, NavItem, NavLink as Link } from 'reactstrap';
 import Home from '../pages/Home';
 import Projects from '../pages/Projects';
+import ProjectView from '../pages/ProjectView';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  // Link
 } from "react-router-dom";
 
 class App extends React.Component {
@@ -28,6 +30,9 @@ class App extends React.Component {
               <Link href="/projects">Projects</Link>
             </NavItem>
             <NavItem>
+              <Link href="/project/1">Project</Link>
+            </NavItem>
+            <NavItem>
               <Link disabled href="#">Disabled Link</Link>
             </NavItem>
           </Nav>
@@ -38,6 +43,9 @@ class App extends React.Component {
           </Route>
           <Route path="/projects">
             <Projects />
+          </Route>
+          <Route path="/project/:id">
+            <ProjectView />
           </Route>
         </Switch>
       </Router>
