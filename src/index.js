@@ -1,34 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+
+import './styles/index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 const client = new ApolloClient({
-  // uri: 'http://gearsx.local/graphql',
   uri: '/graphql',
 });
-
-
-/*
-import { gql } from "apollo-boost";
-client
-  .query({
-    query: gql`
-      {
-        projects {
-          id
-          name
-        }
-      }
-    `
-  })
-  .then(result => console.log(result));
-*/
 
 const TopLevelApp = () => (
   <ApolloProvider client={client}>
