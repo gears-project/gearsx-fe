@@ -30,9 +30,6 @@ class App extends React.Component {
               <Link href="/projects">Projects</Link>
             </NavItem>
             <NavItem>
-              <Link href="/project/1">Project</Link>
-            </NavItem>
-            <NavItem>
               <Link disabled href="#">Disabled Link</Link>
             </NavItem>
           </Nav>

@@ -1,6 +1,11 @@
 import React from 'react';
+import { Table } from 'reactstrap';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+
+import {
+  Link
+} from "react-router-dom";
 
 const PROJECTS_LIST = gql`
 query getProjects {
@@ -41,20 +46,36 @@ query getProjects {
 }
 `;
 
-function ExchangeRates() {
+export default ()=> {
   const { loading, error, data } = useQuery(PROJECTS_LIST);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return data.projects.map(({ id, name }) => (
-    <div key={id}>
-      <p>
-        {id}: {name}
-      </p>
-    </div>
-  ));
+  return (
+    <Table>
+      <thead>
+        <tr>
+          <th width="20%">#</th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.projects.map(({id, name}) => (
+          <tr>
+            <th scope="row">
+              <Link to={{
+                pathname: `/project/${id}`
+              }}>
+                <pre>{ id }</pre>
+              </Link>
+            </th>
+            <td>{ name }</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
 }
-
-export default ExchangeRates;
 
