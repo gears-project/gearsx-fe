@@ -3,9 +3,9 @@ import { Table } from 'reactstrap';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-import {
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import Loading from './Loading';
 
 const PROJECTS_LIST = gql`
 query getProjects {
@@ -49,7 +49,7 @@ query getProjects {
 export default ()=> {
   const { loading, error, data } = useQuery(PROJECTS_LIST);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Error :(</p>;
 
   return (

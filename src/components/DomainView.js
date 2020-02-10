@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { Card, Button, CardHeader, CardText } from 'reactstrap';
 import EntityList from '../components/domain/EntityList';
+import Loading from './Loading';
 import {
   useParams
 } from "react-router-dom";
@@ -43,7 +44,7 @@ export default ()=> {
   const { id } = useParams();
   const { loading, error, data } = useQuery(getDomainQuery(id));
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Error :(</p>;
 
   const { domain } = data;

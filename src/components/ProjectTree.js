@@ -1,12 +1,13 @@
 import React from 'react';
-import CheckboxTree from 'react-checkbox-tree';
+import { ListGroup, ListGroupItem } from 'reactstrap';
+import { Button, Card, CardHeader, CardTitle, CardText } from 'reactstrap';
+import {
+  Link
+} from "react-router-dom";
+
 
 class ProjectTree extends React.Component {
-  state = {
-    checked: [],
-    expanded: [],
-    disabled: false,
-  };
+  state = { };
 
   render() {
     if (!this.props.project) {
@@ -14,36 +15,24 @@ class ProjectTree extends React.Component {
     }
 
     const project = this.props.project;
-    const nodes = [
-      {
-        value: 'data',
-        label: 'Data',
-        children : project.model.domains.map(({id, name})=> {
-          return {
-            value: `${project.id}/${id}`,
-            label: name,
-          };
-        }),
-      },
-      {
-        value: 'presentation',
-        label: 'Presentation',
-        children: [
-          { value: 'presentation-doc-1', label: 'Form 1' },
-        ],
-      }
-    ];
-
     return (
-      <CheckboxTree
-        showExpandAll={true}
-        disabled={this.state.disabled}
-        nodes={nodes}
-        checked={this.state.checked}
-        expanded={this.state.expanded}
-        onCheck={checked => this.setState({ checked })}
-        onExpand={expanded => this.setState({ expanded })}
-      />
+      <Card body>
+        <CardHeader>
+          Domains
+        </CardHeader>
+        <CardText>
+          <ListGroup>
+            {project.model.domains.map(({id, name}) => (
+              <ListGroupItem className="justify-content-between">
+                <Link
+                  to={location => `${location.pathname}/domain/${id}`}>
+                  { name }
+                </Link>
+              </ListGroupItem>
+            ))}
+          </ListGroup>
+        </CardText>
+      </Card>
     );
   }
 }
