@@ -53,29 +53,35 @@ export default ()=> {
   if (error) return <p>Error :(</p>;
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th width="20%">#</th>
-          <th>Name</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.projects.map(({id, name}) => (
+    <main role="main">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 className="h2">Projects</h1>
+      </div>
+
+      <Table>
+        <thead>
           <tr>
-            <th scope="row">
-              <Link to={{
-                pathname: `/project/${id}`
-              }}>
-                <pre>{ id }</pre>
-              </Link>
-            </th>
-            <td>{ name }</td>
+            <th width="20%">#</th>
+            <th>Name</th>
+            <th></th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {data.projects.map(({id, name}) => (
+            <tr>
+              <th scope="row">
+                <Link to={{
+                  pathname: `/project/${id}`
+                }}>
+                  <pre>{ id }</pre>
+                </Link>
+              </th>
+              <td>{ name }</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </main>
   );
 }
 

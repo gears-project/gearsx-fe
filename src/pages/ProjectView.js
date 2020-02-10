@@ -1,10 +1,14 @@
 import React from 'react'
 import ProjectTree from '../components/ProjectTree';
+import DomainView from '../components/DomainView';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
 import {
-  useParams
+  Switch,
+  Route,
+  useParams,
+  useRouteMatch,
 } from "react-router-dom";
 
 
@@ -29,7 +33,7 @@ function getProjectQuery(id) {
 
 export default (props) => {
   let { id } = useParams();
-  console.error('useParams ', useParams());
+  let match = useRouteMatch();
 
   const { loading, error, data } = useQuery(getProjectQuery(id));
 
@@ -52,9 +56,15 @@ export default (props) => {
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 className="h2">Overview {project.id}</h1>
             </div>
-
-            <h2>Section title</h2>
             <div>
+              <Switch>
+                <Route path={`${match.path}/domain/:id`}>
+                  <DomainView />
+                </Route>
+                <Route path={match.path}>
+                  <h3>Please select a topic.</h3>
+                </Route>
+              </Switch>
             </div>
           </main>
         </div>
