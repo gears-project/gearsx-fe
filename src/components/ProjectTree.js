@@ -1,10 +1,9 @@
 import React from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
-import { Button, Card, CardHeader, CardTitle, CardText } from 'reactstrap';
+import { Button, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
 import {
   Link
 } from "react-router-dom";
-
 
 class ProjectTree extends React.Component {
   state = { };
@@ -20,7 +19,7 @@ class ProjectTree extends React.Component {
         <CardHeader>
           Domains
         </CardHeader>
-        <CardText>
+        <CardBody>
           <ListGroup>
             {project.model.domains.map(({id, name}) => (
               <ListGroupItem className="justify-content-between">
@@ -31,7 +30,7 @@ class ProjectTree extends React.Component {
               </ListGroupItem>
             ))}
           </ListGroup>
-        </CardText>
+        </CardBody>
       </Card>
     );
   }

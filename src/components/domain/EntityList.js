@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
-import { Button, Card, CardHeader, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { Button, Card, CardHeader, CardTitle, CardBody, Row, Col } from 'reactstrap';
 
 class EntityList extends React.Component {
   state = {};
@@ -20,16 +20,16 @@ class EntityList extends React.Component {
                    { name }
                    <Button close />
                  </CardHeader>
-                 <CardText>
+                 <CardBody>
                    <ListGroup>
                      {attributes.map(({id, name, vtype}) => (
-                       <ListGroupItem className="justify-content-between">
+                       <ListGroupItem className="justify-content-between" key={id}>
                          { name } ({vtype.__typename})
                          <Button close />
                        </ListGroupItem>
                      ))}
                    </ListGroup>
-                 </CardText>
+                 </CardBody>
                </Card>
              </Col>
            ))}

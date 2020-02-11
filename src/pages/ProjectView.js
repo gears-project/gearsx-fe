@@ -1,6 +1,8 @@
 import React from 'react'
 import ProjectTree from '../components/ProjectTree';
 import DomainView from '../components/DomainView';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
@@ -32,13 +34,13 @@ function getProjectQuery(id) {
 }
 
 export default (props) => {
-  let { id } = useParams();
+  let { projectId } = useParams();
   let match = useRouteMatch();
 
-  const { loading, error, data } = useQuery(getProjectQuery(id));
+  const { loading, error, data } = useQuery(getProjectQuery(projectId));
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
   const project = data.project;
 
@@ -58,11 +60,11 @@ export default (props) => {
             </div>
             <div>
               <Switch>
-                <Route path={`${match.path}/domain/:id`}>
+                <Route path={`${match.path}/domain/:domainId`}>
                   <DomainView />
                 </Route>
                 <Route path={match.path}>
-                  <h3>Please select a topic.</h3>
+                  <h3>Please select a document</h3>
                 </Route>
               </Switch>
             </div>

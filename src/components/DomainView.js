@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { Card, Button, CardHeader, CardText } from 'reactstrap';
+import { Card, Button, CardHeader, CardBody } from 'reactstrap';
 import EntityList from '../components/domain/EntityList';
 import Loading from './Loading';
 import {
@@ -41,8 +41,8 @@ function getDomainQuery(id) {
 }
 
 export default ()=> {
-  const { id } = useParams();
-  const { loading, error, data } = useQuery(getDomainQuery(id));
+  const { domainId } = useParams();
+  const { loading, error, data } = useQuery(getDomainQuery(domainId));
 
   if (loading) return <Loading />;
   if (error) return <p>Error :(</p>;
@@ -53,9 +53,9 @@ export default ()=> {
     <div>
       <Card body>
         <CardHeader>{domain.name}</CardHeader>
-        <CardText>
+        <CardBody>
           <EntityList entities={domain.body.entities} />
-        </CardText>
+        </CardBody>
         <Button>Go somewhere</Button>
       </Card>
     </div>
