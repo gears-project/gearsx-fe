@@ -13,7 +13,6 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
-
 function getProjectQuery(id) {
   return gql`
     query getProject {

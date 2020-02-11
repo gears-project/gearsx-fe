@@ -10,8 +10,7 @@ import {
 
 function getDomainQuery(id) {
 
-  return gql`
-  {
+  return gql`{
     domain(input: { id: "${id}" }) {
       id
       name
@@ -37,7 +36,7 @@ function getDomainQuery(id) {
         }
       }
     }
-  } `;
+  }`;
 }
 
 export default ()=> {

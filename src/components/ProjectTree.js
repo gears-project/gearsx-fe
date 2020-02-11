@@ -24,7 +24,11 @@ class ProjectTree extends React.Component {
             {project.model.domains.map(({id, name}) => (
               <ListGroupItem className="justify-content-between">
                 <Link
-                  to={location => `${location.pathname}/domain/${id}`}>
+                  to={location => {
+                    // XXX : Use Route.match
+                    const path = location.pathname.replace(/\/+domain\/.*/, '');
+                    return `${path}/domain/${id}`
+                  }}>
                   { name }
                 </Link>
               </ListGroupItem>
