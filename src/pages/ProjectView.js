@@ -13,30 +13,33 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
-function getProjectQuery(id) {
-  return gql`
-    query getProject {
-      project(input: { projectId: "${id}" }) {
+const QUERY = gql`
+  query getProject($id: Uuid!) {
+    project(input: { projectId: $id }) {
+      id
+      name
+      model {
         id
         name
-        model {
+        doctype
+        domains {
           id
           name
-          doctype
-          domains {
-            id
-            name
-          }
         }
       }
-    }`;
-}
+    }
+  }
+`;
 
 export default (props) => {
   let { projectId } = useParams();
   let match = useRouteMatch();
 
-  const { loading, error, data } = useQuery(getProjectQuery(projectId));
+  const { loading, error, data } = useQuery(QUERY, {
+    variables: {
+      id: projectId
+    }
+  });
 
   if (loading) return <Loading />;
   if (error) return <Error />;

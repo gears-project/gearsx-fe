@@ -4,14 +4,14 @@ import { gql } from 'apollo-boost';
 import { Card, Button, CardHeader, CardBody } from 'reactstrap';
 import EntityList from '../components/domain/EntityList';
 import Loading from './Loading';
+import Error from './Error';
 import {
   useParams
 } from "react-router-dom";
 
-function getDomainQuery(id) {
-
-  return gql`{
-    domain(input: { id: "${id}" }) {
+const QUERY = gql`
+  query getDomain($id: Uuid!) {
+    domain(input: { documentId: $id }) {
       id
       name
       body {
@@ -36,15 +36,19 @@ function getDomainQuery(id) {
         }
       }
     }
-  }`;
-}
+  }
+`;
 
 export default ()=> {
   const { domainId } = useParams();
-  const { loading, error, data } = useQuery(getDomainQuery(domainId));
+  const { loading, error, data } = useQuery(QUERY, {
+    variables : {
+      id : domainId,
+    }
+  });
 
   if (loading) return <Loading />;
-  if (error) return <p>Error :(</p>;
+  if (error) return <Error />;
 
   const { domain } = data;
 
