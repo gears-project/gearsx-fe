@@ -5,8 +5,8 @@ import { gql } from 'apollo-boost';
 
 import { Link } from "react-router-dom";
 
-import Loading from './Loading';
-import Error from './Error';
+import Loading from 'components/Loading';
+import Error from 'components/Error';
 
 const PROJECTS_LIST = gql`
 query getProjects {

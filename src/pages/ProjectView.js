@@ -1,8 +1,8 @@
 import React from 'react'
-import ProjectTree from '../components/ProjectTree';
-import DomainView from '../components/DomainView';
-import Loading from '../components/Loading';
-import Error from '../components/Error';
+import ProjectTree from 'components/project/ProjectTree';
+import DomainView from 'components/domain/DomainView';
+import Loading from 'components/Loading';
+import Error from 'components/Error';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import '../styles/App.css';
 import { Nav, NavItem, NavLink} from 'reactstrap';
-import Home from '../pages/Home';
-import Projects from '../pages/Projects';
-import ProjectView from '../pages/ProjectView';
+import Home from 'pages/Home';
+import Projects from 'pages/Projects';
+import ProjectView from 'pages/ProjectView';
 import {
   BrowserRouter as Router,
   Switch,

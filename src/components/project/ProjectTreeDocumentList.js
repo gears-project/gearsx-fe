@@ -14,26 +14,24 @@ export default (props) => {
 
   return (
     <div>
-      <Card body>
-        <CardHeader>
+      <div>
+        <b>
           { title }
           <Button close onClick={toggle} />
-        </CardHeader>
-        <CardBody>
-          <Collapse isOpen={isOpen}>
-            <ListGroup>
-              {documents.map(({id, name}) => (
-                <ListGroupItem className="justify-content-between">
-                  <Link to={ linkFn(id) } >
-                      { name }
-                    </Link>
-                    <Button close />
-                  </ListGroupItem>
-              ))}
-            </ListGroup>
-          </Collapse>
-        </CardBody>
-      </Card>
+        </b>
+        <Collapse isOpen={isOpen}>
+          <ListGroup>
+            {documents.map(({id, name}) => (
+              <ListGroupItem className="justify-content-between">
+                <Link to={ linkFn(id) } >
+                  { name }
+                </Link>
+                <Button close />
+              </ListGroupItem>
+            ))}
+          </ListGroup>
+        </Collapse>
+      </div>
     </div>
   );
 }

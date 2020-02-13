@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectTreeDocumentList from './ProjectTreeDocumentList';
+import ProjectTreeDocumentList from 'components/project/ProjectTreeDocumentList';
 
 class ProjectTree extends React.Component {
   state = { };
