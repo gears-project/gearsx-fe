@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
-import { Button, Card, CardHeader, CardTitle, CardBody, Row, Col } from 'reactstrap';
+import { Button, Card, CardHeader, CardBody, Row, Col } from 'reactstrap';
 
 class EntityList extends React.Component {
   state = {};
@@ -10,6 +10,10 @@ class EntityList extends React.Component {
       return <i>No entities found</i>;
     } else {
       const entities = this.props.entities;
+
+      if (entities.length < 1) {
+        return <b>No entities, create one!</b>;
+      }
 
       return (
         <Row>
