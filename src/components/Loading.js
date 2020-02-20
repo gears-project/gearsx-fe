@@ -1,11 +1,9 @@
 import React from 'react';
-import { Progress } from 'reactstrap';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const Loading = (props) => {
   return (
-    <Progress multi>
-      <Progress bar animated color="success" value="100">Loading</Progress>
-    </Progress>
+		<LinearProgress />
   );
 };
 

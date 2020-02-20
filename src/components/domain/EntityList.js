@@ -1,46 +1,56 @@
 import React from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
-import { Button, Card, CardHeader, CardBody, Row, Col } from 'reactstrap';
 
-class EntityList extends React.Component {
-  state = {};
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
-  render() {
-    if (!this.props.entities) {
-      return <i>No entities found</i>;
-    } else {
-      const entities = this.props.entities;
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
-      if (entities.length < 1) {
-        return <b>No entities, create one!</b>;
-      }
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
 
-      return (
-        <Row>
-           {entities.map(({id, name, attributes}) => (
-             <Col sm="4">
-               <Card body>
-                 <CardHeader>
-                   { name }
-                   <Button close />
-                 </CardHeader>
-                 <CardBody>
-                   <ListGroup>
-                     {attributes.map(({id, name, vtype}) => (
-                       <ListGroupItem className="justify-content-between" key={id}>
-                         { name } ({vtype.__typename})
-                         <Button close />
-                       </ListGroupItem>
-                     ))}
-                   </ListGroup>
-                 </CardBody>
-               </Card>
-             </Col>
-           ))}
-        </Row>
-      );
+export default function EntityList(props) {
+
+  const classes = useStyles();
+
+  if (!this.props.entities) {
+    return <i>No entities found</i>;
+  } else {
+    const entities = this.props.entities;
+
+    if (entities.length < 1) {
+      return <b>No entities, create one!</b>;
     }
+
+    return (
+      <Grid container spacing={3}>
+        {entities.map(({id, name, attributes}) => (
+          <Grid item xs={3}>
+            <Paper className={classes.paper}>
+              <div className={classes.root}>
+
+                <List component="nav" aria-label="main mailbox folders">
+                  {attributes.map(({id, name, vtype}) => (
+                    <ListItem button>
+                      <ListItemText primary="Inbox">
+                        { name } ({vtype.__typename})
+                      </ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+              </div>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    );
   }
 }
 
-export default EntityList;

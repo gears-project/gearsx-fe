@@ -1,9 +1,9 @@
 import React from 'react';
-import { Alert } from 'reactstrap';
+import Alert from '@material-ui/lab/Alert';
 
 export default (props) => {
   return (
-    <Alert color="danger">
+		<Alert severity="error">
       An error has occurred
     </Alert>
   );
