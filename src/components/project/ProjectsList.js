@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,7 +12,7 @@ import Title from 'components/Title';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Loading from 'components/Loading';
 import Error from 'components/Error';
@@ -102,7 +102,13 @@ export default ()=> {
         <TableBody>
           {data.projects.map(({id, name}) => (
             <TableRow key={id}>
-              <TableCell>{id}</TableCell>
+              <TableCell>
+                <Link to={{
+                  pathname: `/project/${id}`
+                }}>
+                  {id}
+                </Link>
+              </TableCell>
               <TableCell>{name}</TableCell>
             </TableRow>
           ))}
