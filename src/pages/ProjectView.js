@@ -13,6 +13,20 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+}));
+
 const QUERY = gql`
   query getProject($id: Uuid!) {
     project(input: { projectId: $id }) {
@@ -26,6 +40,10 @@ const QUERY = gql`
           id
           name
         }
+        xflows {
+          id
+          name
+        }
       }
     }
   }
@@ -34,6 +52,7 @@ const QUERY = gql`
 export default (props) => {
   let { projectId } = useParams();
   let match = useRouteMatch();
+  const classes = useStyles();
 
   const { loading, error, data } = useQuery(QUERY, {
     variables: {
@@ -48,19 +67,15 @@ export default (props) => {
 
   return (
     <div>
-      <div className="container-fluid">
-        <div className="row">
-          <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-            <div className="sidebar-sticky">
-              <ProjectTree project={project} />
-            </div>
-          </nav>
-
-          <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h3 className="h3">Overview {project.id}</h3>
-            </div>
-            <div>
+      <Grid container spacing={3}>
+        {/* Recent */}
+        <Grid item xs={3}>
+          <Paper className={classes.paper}>
+            <ProjectTree project={project} />
+          </Paper>
+        </Grid>
+        <Grid item xs={9}>
+          <Paper className={classes.paper}>
               <Switch>
                 <Route path={`${match.path}/domain/:domainId`}>
                   <DomainView />
@@ -69,10 +84,9 @@ export default (props) => {
                   <h3>Please select a document</h3>
                 </Route>
               </Switch>
-            </div>
-          </main>
-        </div>
-      </div>
+          </Paper>
+        </Grid>
+      </Grid>
     </div>
   )
 }

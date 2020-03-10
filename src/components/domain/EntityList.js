@@ -20,10 +20,10 @@ export default function EntityList(props) {
 
   const classes = useStyles();
 
-  if (!this.props.entities) {
+  if (!props.entities) {
     return <i>No entities found</i>;
   } else {
-    const entities = this.props.entities;
+    const entities = props.entities;
 
     if (entities.length < 1) {
       return <b>No entities, create one!</b>;
@@ -39,7 +39,7 @@ export default function EntityList(props) {
                 <List component="nav" aria-label="main mailbox folders">
                   {attributes.map(({id, name, vtype}) => (
                     <ListItem button>
-                      <ListItemText primary="Inbox">
+                      <ListItemText primary={ name }>
                         { name } ({vtype.__typename})
                       </ListItemText>
                     </ListItem>

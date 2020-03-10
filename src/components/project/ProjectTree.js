@@ -9,10 +9,12 @@ import Collapse from '@material-ui/core/Collapse';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 
 const domainLinkFn = (id) => {
-	return (location) => {
-		// XXX : Use Route.match
-		const path = location.pathname.replace(/\/+domain\/.*/, '');
-		return `${path}/domain/${id}`
+  return (/* location */) => {
+    // XXX : Use Route.match
+    // XXX: Hackity-hack
+		const path = window.location.pathname.replace(/\/+domain\/.*/, '');
+    // return `${path}/domain/${id}`
+		window.location.pathname = `${path}/domain/${id}`
 	};
 };
 
@@ -25,8 +27,8 @@ export default function(props) {
 
 	const project = props.project;
 	const domains = project.model.domains;
+	const xflows = project.model.xflows;
 	const pages = [];
-	const flows = [];
 
 	const pageLinkFn = (id) => { }
 	const flowLinkFn = (id) => { }
@@ -42,7 +44,7 @@ export default function(props) {
       <StyledTreeItem nodeId="1" label="Model">
 				<ProjectTreeDocumentList title="Domains" documents={domains} linkFn={domainLinkFn} />
 				<ProjectTreeDocumentList title="Pages" documents={pages} linkFn={pageLinkFn} />
-				<ProjectTreeDocumentList title="Flows" documents={flows} linkFn={flowLinkFn} />
+				<ProjectTreeDocumentList title="Flows" documents={xflows} linkFn={flowLinkFn} />
       </StyledTreeItem>
 		</TreeView>
 	);
@@ -56,7 +58,7 @@ function ProjectTreeDocumentList(props) {
   return (
     <StyledTreeItem nodeId="3" label={title}>
       {documents.map(({id, name}) => (
-        <StyledTreeItem nodeId={id} label={name} />
+        <StyledTreeItem nodeId={id} label={name} onClick={linkFn(id)} />
       ))}
     </StyledTreeItem>
   );
@@ -103,6 +105,7 @@ const useStyles = makeStyles({
   },
 });
 
+/*
 function CustomizedTreeView(props) {
   const classes = useStyles();
 
@@ -131,8 +134,7 @@ function CustomizedTreeView(props) {
     </TreeView>
   );
 }
-
-
+*/
 
 function MinusSquare(props) {
   return (

@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
@@ -25,6 +27,15 @@ const Projects = (props) => {
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <ProjectsList />
+          </Paper>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper className={classes.paper}>
+            <Link to={{
+              pathname: `/project/new`
+            }}>
+              New Project
+            </Link>
           </Paper>
         </Grid>
       </Grid>

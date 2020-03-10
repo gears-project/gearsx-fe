@@ -24,6 +24,7 @@ import {
 } from "react-router-dom";
 
 import Projects from 'pages/Projects';
+import NewProject from 'pages/NewProject';
 import ProjectView from 'pages/ProjectView';
 
 const drawerWidth = 240;
@@ -167,6 +168,9 @@ export default function Dashboard() {
             <Switch>
               <Route path="/projects">
                 <Projects />
+              </Route>
+              <Route path="/project/new">
+                <NewProject />
               </Route>
               <Route path="/project/:projectId">
                 <ProjectView />

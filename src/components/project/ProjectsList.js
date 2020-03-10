@@ -17,11 +17,19 @@ import { Link } from "react-router-dom";
 import Loading from 'components/Loading';
 import Error from 'components/Error';
 
+import { format } from 'date-fns'
+
+function formatDate(d) {
+  return format(d * 1000, 'yyyy-MM-dd');
+}
+
 const PROJECTS_LIST = gql`
 query getProjects {
   projects(paging:{limit:20}) {
     id
     name
+    createdAt
+    updatedAt
     model {
       id
       name
@@ -56,7 +64,6 @@ query getProjects {
 }
 `;
 
-
 function preventDefault(event) {
   event.preventDefault();
 }
@@ -66,20 +73,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
   },
 }));
-/*
-              {data.projects.map(({id, name}) => (
-                <tr>
-                  <th scope="row">
-                    <Link to={{
-                      pathname: `/project/${id}`
-                    }}>
-                      <pre>{ id }</pre>
-                    </Link>
-                  </th>
-                  <td>{ name }</td>
-                </tr>
-              ))}
-*/
 
 export default ()=> {
 
@@ -97,10 +90,12 @@ export default ()=> {
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Name</TableCell>
+            <TableCell>Updated</TableCell>
+            <TableCell>Created</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.projects.map(({id, name}) => (
+          {data.projects.map(({id, name, createdAt, updatedAt}) => (
             <TableRow key={id}>
               <TableCell>
                 <Link to={{
@@ -110,6 +105,8 @@ export default ()=> {
                 </Link>
               </TableCell>
               <TableCell>{name}</TableCell>
+              <TableCell>{formatDate(createdAt)}</TableCell>
+              <TableCell>{formatDate(updatedAt)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
