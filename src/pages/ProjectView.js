@@ -1,6 +1,7 @@
 import React from 'react'
 import ProjectTree from 'components/project/ProjectTree';
 import DomainView from 'components/domain/DomainView';
+import XFlowView from 'components/xflow/XFlowView';
 import Loading from 'components/Loading';
 import Error from 'components/Error';
 import { useQuery } from '@apollo/react-hooks';
@@ -79,6 +80,9 @@ export default (props) => {
               <Switch>
                 <Route path={`${match.path}/domain/:domainId`}>
                   <DomainView />
+                </Route>
+                <Route path={`${match.path}/xflow/:xflowId`}>
+                  <XFlowView />
                 </Route>
                 <Route path={match.path}>
                   <h3>Please select a document</h3>
