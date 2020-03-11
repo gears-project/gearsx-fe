@@ -1,5 +1,4 @@
 import React from 'react';
-// import ProjectTreeDocumentList from 'components/project/ProjectTreeDocumentList';
 import PropTypes from 'prop-types';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
@@ -7,19 +6,16 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import Collapse from '@material-ui/core/Collapse';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-
-const domainLinkFn = (id) => {
-  return (/* location */) => {
-    // XXX : Use Route.match
-    // XXX: Hackity-hack
-		const path = window.location.pathname.replace(/\/+domain\/.*/, '');
-    // return `${path}/domain/${id}`
-		window.location.pathname = `${path}/domain/${id}`
-	};
-};
+import {
+  useRouteMatch,
+  useHistory,
+} from "react-router-dom";
+import routes from 'routes';
 
 export default function(props) {
   const classes = useStyles();
+  const history = useHistory();
+  const routeMatch = useRouteMatch();
 
 	if (!props.project) {
 		return <i>No project found</i>;
@@ -30,8 +26,20 @@ export default function(props) {
 	const xflows = project.model.xflows;
 	const pages = [];
 
-	const pageLinkFn = (id) => { }
-	const flowLinkFn = (id) => { }
+	const pageLinkFn = (id) => { };
+  const flowLinkFn = (id) => {
+    const projectId = routeMatch.params.projectId;
+    return ()=> {
+      history.push(routes.xflow(projectId, id));
+    }
+  };
+
+  const domainLinkFn = (id) => {
+    const projectId = routeMatch.params.projectId;
+    return ()=> {
+      history.push(routes.domain(projectId, id));
+    }
+  };
 
 	return (
     <TreeView

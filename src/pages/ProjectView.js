@@ -66,15 +66,15 @@ export default (props) => {
   const project = data.project;
 
   return (
-    <div>
+    <Box width={1}>
       <Grid container spacing={3}>
         {/* Recent */}
-        <Grid item xs={3}>
+        <Grid sm={3}>
           <Paper className={classes.paper}>
             <ProjectTree project={project} />
           </Paper>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item sm={9}>
           <Paper className={classes.paper}>
               <Switch>
                 <Route path={`${match.path}/domain/:domainId`}>
@@ -87,6 +87,6 @@ export default (props) => {
           </Paper>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   )
 }
