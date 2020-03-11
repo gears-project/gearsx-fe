@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import ERDEditor from 'components/domain/ERDEditor';
+import XFlowEditor from 'components/xflow/XFlowEditor';
 import Loading from 'components/Loading';
 import Error from 'components/Error';
 import {
@@ -30,6 +30,11 @@ const QUERY = gql`
           id
           nodetype
           action
+          label
+          position {
+            x
+            y
+          }
           parameters {
             ... on FlowParameters {
               __typename
@@ -130,7 +135,7 @@ export default ()=> {
         { xflow.name }
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ERDEditor />
+        <XFlowEditor xflow={xflow}/>
       </TabPanel>
     </div>
   );
