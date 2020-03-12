@@ -1,6 +1,13 @@
 import React from 'react';
 import '../styles/App.css';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Dashboard from 'components/Dashboard';
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 
 class App extends React.Component {
   constructor() {
@@ -11,7 +18,9 @@ class App extends React.Component {
   }
   render() {
     return (
-        <Dashboard />
+        <ThemeProvider theme={darkTheme}>
+					<Dashboard />
+        </ThemeProvider>
     );
   }
 }
