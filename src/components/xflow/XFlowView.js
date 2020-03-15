@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import XFlowEditor from 'components/xflow/XFlowEditor';
+import XFlowEditor from 'components/xflow-editor/XFlowEditor';
 import Loading from 'components/Loading';
 import Error from 'components/Error';
 import {
@@ -34,14 +34,6 @@ const QUERY = gql`
           position {
             x
             y
-          }
-          parameters {
-            ... on FlowParameters {
-              __typename
-            }
-            ... on FloxParameters {
-              __typename
-            }
           }
         }
       }
@@ -127,8 +119,8 @@ export default ()=> {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label="Entities" href="/drafts" {...a11yProps(0)} />
-          <LinkTab label="Relations" href="/trash" {...a11yProps(1)} />
+          <LinkTab label="Details" href="/drafts" {...a11yProps(0)} />
+          <LinkTab label="Graph editor" href="/trash" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

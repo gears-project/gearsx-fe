@@ -1,4 +1,8 @@
 import React from 'react'
+
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { useHistory } from "react-router-dom";
@@ -16,8 +20,18 @@ const NEW_PROJECT = gql`
   }
 `;
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: 200,
+    },
+  },
+}));
+
 export default function NewProject() {
   const history = useHistory();
+  const classes = useStyles();
 
   let input;
 
@@ -31,12 +45,16 @@ export default function NewProject() {
   return (
     <div>
       <form
+        className={classes.root} noValidate autoComplete="off"
         onSubmit={e => {
           e.preventDefault();
           newProject({ variables: { name: input.value } });
           input.value = '';
         }}
       >
+        <TextField id="name" label="Name" variant="outlined" 
+        />
+
         <input
           ref={node => {
             input = node;

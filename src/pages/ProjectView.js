@@ -21,7 +21,7 @@ import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
@@ -67,15 +67,16 @@ export default (props) => {
   const project = data.project;
 
   return (
-    <Box width={1}>
-      <Grid container spacing={3}>
-        {/* Recent */}
-        <Grid sm={3}>
+    <Box width={1}  height="100%">
+      <Grid container spacing={2}>
+
+        <Grid item sm={2}>
           <Paper className={classes.paper}>
             <ProjectTree project={project} />
           </Paper>
         </Grid>
-        <Grid item sm={9}>
+
+        <Grid item sm={10}>
           <Paper className={classes.paper}>
               <Switch>
                 <Route path={`${match.path}/domain/:domainId`}>
@@ -90,6 +91,7 @@ export default (props) => {
               </Switch>
           </Paper>
         </Grid>
+
       </Grid>
     </Box>
   )

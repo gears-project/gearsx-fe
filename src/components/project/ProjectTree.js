@@ -49,7 +49,7 @@ export default function(props) {
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
     >
-      <StyledTreeItem nodeId="1" label="Model">
+      <StyledTreeItem nodeId="0" label="Model">
 				<ProjectTreeDocumentList title="Domains" documents={domains} linkFn={domainLinkFn} />
 				<ProjectTreeDocumentList title="Pages" documents={pages} linkFn={pageLinkFn} />
 				<ProjectTreeDocumentList title="Flows" documents={xflows} linkFn={flowLinkFn} />
@@ -64,9 +64,9 @@ function ProjectTreeDocumentList(props) {
   const linkFn = props.linkFn;
 
   return (
-    <StyledTreeItem nodeId="3" label={title}>
+    <StyledTreeItem nodeId={title} label={title}>
       {documents.map(({id, name}) => (
-        <StyledTreeItem nodeId={id} label={name} onClick={linkFn(id)} />
+        <StyledTreeItem id={id} nodeId={id} label={name} onClick={linkFn(id)} />
       ))}
     </StyledTreeItem>
   );
