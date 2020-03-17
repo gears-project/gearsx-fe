@@ -14,7 +14,7 @@ import routes from 'routes';
 
 const useStyles = makeStyles({
   root: {
-    height: 240,
+    minHeight: 500,
     flexGrow: 1,
     maxWidth: 400,
   },
@@ -56,11 +56,9 @@ export default function(props) {
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
     >
-      <TreeItem nodeId="0" label="Model">
-				<ProjectTreeDocumentList title="Domains" documents={domains} linkFn={domainLinkFn} />
-				<ProjectTreeDocumentList title="Pages" documents={pages} linkFn={pageLinkFn} />
-				<ProjectTreeDocumentList title="Flows" documents={xflows} linkFn={flowLinkFn} />
-      </TreeItem>
+      <ProjectTreeDocumentList title="Domains" documents={domains} linkFn={domainLinkFn} />
+      <ProjectTreeDocumentList title="Pages" documents={pages} linkFn={pageLinkFn} />
+      <ProjectTreeDocumentList title="Flows" documents={xflows} linkFn={flowLinkFn} />
 		</TreeView>
 	);
 }
