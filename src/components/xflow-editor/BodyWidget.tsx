@@ -22,10 +22,6 @@ export interface BodyWidgetProps {
 
 class BodyWidget extends React.Component<BodyWidgetProps> {
 
-  constructor(props) {
-    super(props);
-  }
-
 	render() {
     const { classes } = this.props;
 		return <CanvasWidget className={classes.root} engine={this.props.engine} />;

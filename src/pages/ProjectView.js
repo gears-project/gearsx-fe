@@ -1,9 +1,4 @@
 import React from 'react'
-import ProjectTree from 'components/project/ProjectTree';
-import DomainView from 'components/domain/DomainView';
-import XFlowView from 'components/xflow/XFlowView';
-import Loading from 'components/Loading';
-import Error from 'components/Error';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
@@ -18,6 +13,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+
+import ProjectTree from 'components/project/ProjectTree';
+import AddDocument from 'components/document/AddDocument';
+import DomainView from 'components/domain/DomainView';
+import XFlowView from 'components/xflow/XFlowView';
+import Loading from 'components/Loading';
+import Error from 'components/Error';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -79,6 +81,9 @@ export default (props) => {
         <Grid item sm={10}>
           <Paper className={classes.paper}>
               <Switch>
+                <Route path={`${match.path}/add`}>
+                  <AddDocument />
+                </Route>
                 <Route path={`${match.path}/domain/:domainId`}>
                   <DomainView />
                 </Route>
