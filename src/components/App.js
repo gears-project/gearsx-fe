@@ -5,7 +5,7 @@ import Dashboard from 'components/Dashboard';
 
 const darkTheme = createMuiTheme({
   palette: {
-    type: 'dark',
+    type: 'light',
   },
 });
 
