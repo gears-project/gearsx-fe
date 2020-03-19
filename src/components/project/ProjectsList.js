@@ -18,7 +18,7 @@ import routes from 'routes';
 import { format } from 'date-fns'
 
 function formatDate(d) {
-  return format(d * 1000, 'yyyy-MM-dd');
+  return format(d * 1000, 'yyyy-MM-dd HH:mm');
 }
 
 function capString(s) {
@@ -29,11 +29,38 @@ function capString(s) {
   }
 }
 
+const numericStyle = {
+  textAlign: 'right',
+}
+
 const columns = [
-  { title: "Name", field: "name" },
-  { title: "Description", field: "description", render: rowData=> capString(rowData.description) },
-  { title: "Created", field: "createdAt", render: rowData=> formatDate(rowData.createdAt) },
-  { title: "Updated", field: "updatedAt", render: rowData=> formatDate(rowData.createdAt) },
+  {
+    title: "Name",
+    field: "name",
+    editable: 'onUpdate',
+  },
+  {
+    title: "Description",
+    field: "description",
+    editable: 'onUpdate',
+    render: rowData=> capString(rowData.description),
+  },
+  {
+    title: "Created",
+    field: "createdAt",
+    editable: 'never',
+    render: rowData=> formatDate(rowData.createdAt),
+    headerStyle: numericStyle,
+    cellStyle: numericStyle,
+  },
+  {
+    title: "Updated",
+    field: "updatedAt",
+    editable: 'never',
+    render: rowData=> formatDate(rowData.createdAt),
+    headerStyle: numericStyle,
+    cellStyle: numericStyle,
+  },
 ];
 
 const PROJECTS_LIST = gql`
@@ -86,6 +113,20 @@ const DELETE_PROJECT = gql`
   }
 `;
 
+const UPDATE_PROJECT = gql`
+  mutation ($id: Uuid!, $name: String!, $description: String) {
+    updateProject(input: {
+      id: $id,
+      name: $name,
+      description: $description
+    }) {
+      id,
+      name,
+      description
+    }
+  }
+`;
+
 export default ()=> {
 
   const history = useHistory();
@@ -93,6 +134,12 @@ export default ()=> {
     update(cache, data) {
       const newRoute = routes.projects();
       history.push(newRoute);
+    }
+  });
+
+  const [updateProject, { /* data */ }] = useMutation(UPDATE_PROJECT, {
+    update(cache, data) {
+      console.log('xxx', data);
     }
   });
 
@@ -113,6 +160,23 @@ export default ()=> {
   function onDeleteClick(event, rowData) {
     const projectId = rowData.id;
     deleteProject({ variables : {projectId: projectId} });
+  }
+
+  function onRowUpdate(newData, oldData) {
+    return new Promise((resolve, reject) => {
+      updateProject({ variables : {
+          id: newData.id,
+          name: newData.name || oldData.name,
+          description: newData.description || oldData.description,
+        }
+      }).then(()=> {
+        const projects = data.projects
+        const index = projects.indexOf(oldData);
+        data[index] = newData;
+        // this.setState({ data }, () => resolve()); */
+        resolve();
+      });
+    });
   }
 
   return (
@@ -141,6 +205,15 @@ export default ()=> {
               onClick: onAddClick,
             }
           ]}
+          options={{
+            headerStyle: {
+              backgroundColor: '#3f51b5',
+              color: '#fff'
+            }
+					}}
+          editable={{
+            onRowUpdate: onRowUpdate,
+          }}
         />
       </div>
     </React.Fragment>
