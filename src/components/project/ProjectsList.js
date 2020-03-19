@@ -1,21 +1,19 @@
 import React from 'react';
 
-// import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Title from 'components/Title';
+import MaterialTable from "material-table";
 
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-
-import { Link } from "react-router-dom";
+import { useMutation } from '@apollo/react-hooks';
 
 import Loading from 'components/Loading';
 import Error from 'components/Error';
+
+import {
+  useHistory,
+} from "react-router-dom";
+
+import routes from 'routes';
 
 import { format } from 'date-fns'
 
@@ -23,11 +21,27 @@ function formatDate(d) {
   return format(d * 1000, 'yyyy-MM-dd');
 }
 
+function capString(s) {
+  if (s.length > 20) {
+    return `${s.substring(0, 20)} ...`;
+  } else {
+    return s;
+  }
+}
+
+const columns = [
+  { title: "Name", field: "name" },
+  { title: "Description", field: "description", render: rowData=> capString(rowData.description) },
+  { title: "Created", field: "createdAt", render: rowData=> formatDate(rowData.createdAt) },
+  { title: "Updated", field: "updatedAt", render: rowData=> formatDate(rowData.createdAt) },
+];
+
 const PROJECTS_LIST = gql`
 query getProjects {
   projects(paging:{limit:20}) {
     id
     name
+    description
     createdAt
     updatedAt
     model {
@@ -64,57 +78,70 @@ query getProjects {
 }
 `;
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-const useStyles = makeStyles(theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}));
+const DELETE_PROJECT = gql`
+  mutation ($projectId: Uuid!) {
+    deleteProject(input: {
+      projectId: $projectId,
+    })
+  }
+`;
 
 export default ()=> {
 
-	const classes = useStyles();
+  const history = useHistory();
+  const [deleteProject, { /* data */ }] = useMutation(DELETE_PROJECT, {
+    update(cache, data) {
+      const newRoute = routes.projects();
+      history.push(newRoute);
+    }
+  });
+
   const { loading, error, data } = useQuery(PROJECTS_LIST);
 
   if (loading) return <Loading />;
   if (error) return <Error />;
 
+  function onRowClick(event, rowData) {
+    const projectId = rowData.id;
+    history.push(routes.project(projectId));
+  }
+
+  function onAddClick(event) {
+    history.push(routes.new_project());
+  }
+
+  function onDeleteClick(event, rowData) {
+    const projectId = rowData.id;
+    deleteProject({ variables : {projectId: projectId} });
+  }
+
   return (
     <React.Fragment>
-      <Title>Projects</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Updated</TableCell>
-            <TableCell>Created</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.projects.map(({id, name, createdAt, updatedAt}) => (
-            <TableRow key={id}>
-              <TableCell>
-                <Link to={{
-                  pathname: `/project/${id}`
-                }}>
-                  {id}
-                </Link>
-              </TableCell>
-              <TableCell>{name}</TableCell>
-              <TableCell>{formatDate(createdAt)}</TableCell>
-              <TableCell>{formatDate(updatedAt)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more
-        </Link>
+      <div style={{ maxWidth: "100%" }}>
+        <MaterialTable
+          columns={columns}
+          data={data.projects}
+          onClick={onRowClick}
+          title="Projects"
+          actions={[
+            {
+              icon: 'save',
+              tooltip: 'Go to project',
+              onClick: onRowClick,
+            },
+            {
+              icon: 'delete',
+              tooltip: 'Delete project',
+              onClick: onDeleteClick,
+            },
+            {
+              icon: 'add',
+              tooltip: 'Add Project',
+              isFreeAction: true,
+              onClick: onAddClick,
+            }
+          ]}
+        />
       </div>
     </React.Fragment>
   );

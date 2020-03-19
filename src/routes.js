@@ -2,6 +2,9 @@ export default {
   new_project() {
     return '/project/new';
   },
+  projects() {
+    return `/projects/`;
+  },
   project(id) {
     return `/project/${id}`;
   },

@@ -2,11 +2,8 @@ import React from 'react'
 import ProjectsList from 'components/project/ProjectsList';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -29,19 +26,7 @@ const Projects = (props) => {
             <ProjectsList />
           </Paper>
         </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>
-            <Link to={{
-              pathname: `/project/new`
-            }}>
-              New Project
-            </Link>
-          </Paper>
-        </Grid>
       </Grid>
-      <Box pt={4}>
-        Gears
-      </Box>
     </div>
   );
 }

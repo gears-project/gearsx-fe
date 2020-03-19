@@ -4,7 +4,6 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 import './styles/index.css';
-import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
