@@ -87,12 +87,13 @@ export default function AddDocument() {
   }
 
   const initialValues : NewDocumentFormData = {
-      name: 'New Document',
+      name: '',
       description: '',
   };
 
   return (
     <div>
+      <h1>Add a new document</h1>
       <NewDocumentForm initialValues={initialValues} onSubmit={onSubmit} />
     </div>
   );

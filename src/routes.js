@@ -5,6 +5,9 @@ export default {
   project(id) {
     return `/project/${id}`;
   },
+  add_document(projectId) {
+    return `/project/${projectId}/add`;
+  },
   xflow(projectId, id) {
     return `/project/${projectId}/xflow/${id}`;
   },

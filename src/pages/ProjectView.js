@@ -9,6 +9,8 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
+import Skeleton from '@material-ui/lab/Skeleton';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -63,7 +65,12 @@ export default (props) => {
     }
   });
 
-  if (loading) return <Loading />;
+  if (loading) return (
+    <div>
+      <Loading />
+      <Skeleton variant="rect" width={210} height={118} />
+    </div>);
+
   if (error) return <Error />;
 
   const project = data.project;

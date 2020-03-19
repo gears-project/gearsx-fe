@@ -25,6 +25,9 @@ export function NewDocumentForm(props: NewDocumentFormProps) {
   const { initialValues, onSubmit } = props;
 
   async function validate(values: NewDocumentFormData) {
+    if (!values.doctype) {
+      return { doctype: 'Document type must be selected.' };
+    }
     if (!values.name) {
       return { name: 'Document requires a name.' };
     }
@@ -41,7 +44,7 @@ export function NewDocumentForm(props: NewDocumentFormProps) {
           <Grid container direction="column" alignContent="stretch">
             <Grid item>
               <Radios
-                label="Select one..."
+                label="Select a document type"
                 name="doctype"
                 required={true}
                 data={ doctypes }
