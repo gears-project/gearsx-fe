@@ -189,7 +189,7 @@ export default ()=> {
           title="Projects"
           actions={[
             {
-              icon: 'save',
+              icon: 'arrow_upward',
               tooltip: 'Go to project',
               onClick: onRowClick,
             },
