@@ -4,9 +4,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 // import { Route, MemoryRouter } from 'react-router';
@@ -38,11 +35,8 @@ ListItemLink.propTypes = {
 
 export const mainListItems = (
   <div>
-    <ListItemLink to="/projects" primary="Dashboard" icon={<DashboardIcon />} />
+    <ListItemLink to="/" primary="Dashboard" icon={<DashboardIcon />} />
     <ListItemLink to="/projects" primary="Projects" icon={<AssignmentIcon />} />
-    <ListItemLink to="/users" primary="Users" icon={<PeopleIcon />} />
-    <ListItemLink to="/reports" primary="Reports" icon={<BarChartIcon />} />
-    <ListItemLink to="/xx" primary="Integrations" icon={<LayersIcon />} />
   </div>
 );
 

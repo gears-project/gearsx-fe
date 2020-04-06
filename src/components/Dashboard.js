@@ -24,6 +24,7 @@ import {
 
 import Projects from 'pages/Projects';
 import NewProject from 'pages/NewProject';
+import ProjectSidebar from 'components/project//ProjectSidebar';
 import ProjectView from 'pages/ProjectView';
 
 const drawerWidth = 240;
@@ -110,7 +111,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -160,6 +161,11 @@ export default function Dashboard() {
           <Divider />
           <List>{ mainListItems }</List>
           <Divider />
+          <Switch>
+            <Route path="/project/:projectId">
+              <ProjectSidebar />
+            </Route>
+          </Switch>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

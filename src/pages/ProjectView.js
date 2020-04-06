@@ -1,27 +1,19 @@
 import React from 'react'
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 
 import {
   Switch,
   Route,
-  useParams,
   useRouteMatch,
 } from "react-router-dom";
-
-import Skeleton from '@material-ui/lab/Skeleton';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import ProjectTree from 'components/project/ProjectTree';
 import AddDocument from 'components/document/AddDocument';
 import DomainView from 'components/domain/DomainView';
 import XFlowView from 'components/xflow/XFlowView';
-import Loading from 'components/Loading';
-import Error from 'components/Error';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,60 +24,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const QUERY = gql`
-  query getProject($id: Uuid!) {
-    project(input: { projectId: $id }) {
-      id
-      name
-      model {
-        id
-        name
-        doctype
-        domains {
-          id
-          name
-        }
-        xflows {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
 export default (props) => {
-  let { projectId } = useParams();
   let match = useRouteMatch();
   const classes = useStyles();
-
-  const { loading, error, data } = useQuery(QUERY, {
-    variables: {
-      id: projectId
-    }
-  });
-
-  if (loading) return (
-    <div>
-      <Loading />
-      <Skeleton variant="rect" width={210} height={118} />
-    </div>);
-
-  if (error) return <Error />;
-
-  const project = data.project;
 
   return (
     <Box width={1}  height="100%">
       <Grid container spacing={2}>
 
-        <Grid item sm={2}>
-          <Paper className={classes.paper}>
-            <ProjectTree project={project} />
-          </Paper>
-        </Grid>
-
-        <Grid item sm={10}>
+        <Grid item sm={12}>
           <Paper className={classes.paper}>
               <Switch>
                 <Route path={`${match.path}/add`}>
