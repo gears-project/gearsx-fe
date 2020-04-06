@@ -67,6 +67,11 @@ export default function(props) {
 			lookup[doc.id] = 'xflow';
   });
 
+  function goToProject() {
+    const projectId = routeMatch.params.projectId;
+    history.push(routes.project(projectId));
+  }
+
   function goToDoc(id) {
     const projectId = routeMatch.params.projectId;
     switch(lookup[id]) {
@@ -96,6 +101,7 @@ export default function(props) {
     console.log('onSelect', arr, selectedNode);
     if (arr.length === 0) {
       setSelectedNode(null);
+      goToProject();
     } else {
       const value = arr[0];
       if (isUuid(value)) {
@@ -104,6 +110,7 @@ export default function(props) {
       } else {
         console.error('ProjectTree : Invalid identifier received');
         setSelectedNode(null);
+        goToProject();
       }
     }
   }
