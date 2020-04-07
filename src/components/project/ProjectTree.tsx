@@ -16,6 +16,8 @@ import 'styles/rc-tree.css';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
+import { useConfirm } from 'material-ui-confirm';
+
 import {
   useRouteMatch,
   useHistory,
@@ -49,6 +51,7 @@ export default function(props) {
   const classes = useStyles();
   const history = useHistory();
   const routeMatch = useRouteMatch();
+  const confirmDialog = useConfirm();
   const [selectedNode, setSelectedNode] = useState(null);
 
 	if (!props.project) {
@@ -127,11 +130,12 @@ export default function(props) {
 
   function deleteSelected(e) {
     e.preventDefault();
-    console.error('xxx', selectedNode);
     if (selectedNode) {
-      console.error('xxx', selectedNode);
-      deleteDocument({ variables : {documentId: selectedNode} });
-    }
+			confirmDialog({ description: "Are you sure?" })
+				.then(()=> {
+						deleteDocument({ variables : {documentId: selectedNode} });
+						});
+		}
   }
 
 	return (

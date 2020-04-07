@@ -6,6 +6,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 
+import { useConfirm } from 'material-ui-confirm';
+
 import Loading from 'components/Loading';
 import Error from 'components/Error';
 
@@ -129,6 +131,7 @@ const UPDATE_PROJECT = gql`
 
 export default ()=> {
 
+  const confirmDialog = useConfirm();
   const history = useHistory();
   const [deleteProject, { /* data */ }] = useMutation(DELETE_PROJECT, {
     update(cache, data) {
@@ -159,7 +162,10 @@ export default ()=> {
 
   function onDeleteClick(event, rowData) {
     const projectId = rowData.id;
-    deleteProject({ variables : {projectId: projectId} });
+		confirmDialog({ description: "Are you sure?" })
+			.then(()=> {
+				deleteProject({ variables : {projectId: projectId} });
+			});
   }
 
   function onRowUpdate(newData, oldData) {

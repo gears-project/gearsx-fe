@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/App.css';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Dashboard from 'components/Dashboard';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -19,7 +20,9 @@ class App extends React.Component {
   render() {
     return (
         <ThemeProvider theme={darkTheme}>
-					<Dashboard />
+          <ConfirmProvider>
+            <Dashboard />
+          </ConfirmProvider>
         </ThemeProvider>
     );
   }
