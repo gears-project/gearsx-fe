@@ -62,12 +62,17 @@ export default function(props) {
 
 	const domains = project.model.domains;
 	const xflows = project.model.xflows;
+	const fngroups = project.model.fngroups;
+
   const lookup = {};
   domains.forEach(doc => {
 			lookup[doc.id] = 'domain';
   });
   xflows.forEach(doc => {
 			lookup[doc.id] = 'xflow';
+  });
+  fngroups.forEach(doc => {
+			lookup[doc.id] = 'fngroup';
   });
 
   function goToProject() {
@@ -83,6 +88,9 @@ export default function(props) {
         break;
       case 'domain':
         history.push(routes.domain(projectId, id));
+        break;
+      case 'fngroup':
+        history.push(routes.fngroup(projectId, id));
         break;
       default:
         console.error('ProjectTree : Unknown lookup type ', lookup[id]);
@@ -159,6 +167,7 @@ export default function(props) {
         >
           { ProjectTreeDocumentList({title:"Domains", documents:domains}) }
           { ProjectTreeDocumentList({title:"Flows", documents:xflows}) }
+          { ProjectTreeDocumentList({title:"Functions", documents:fngroups}) }
         </Tree>
       </div>
 	);

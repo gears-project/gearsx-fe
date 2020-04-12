@@ -43,6 +43,10 @@ const QUERY = gql`
           id
           name
         }
+        fngroups {
+          id
+          name
+        }
       }
     }
   }

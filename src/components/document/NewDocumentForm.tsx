@@ -5,6 +5,8 @@ import { TextField } from 'mui-rff';
 import { Radios } from 'mui-rff';
 import Grid from '@material-ui/core/Grid';
 
+import doctypes from 'doctypes';
+
 export interface NewDocumentFormData {
   name: string;
   description?: string;
@@ -15,11 +17,6 @@ export interface NewDocumentFormProps {
   initialValues: NewDocumentFormData;
   onSubmit: any;
 }
-
-const doctypes = [
-  { label: 'XFlow', value: 'xflow'},
-  { label: 'Domain', value: 'domain'}
-];
 
 export function NewDocumentForm(props: NewDocumentFormProps) {
   const { initialValues, onSubmit } = props;

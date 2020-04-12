@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import AddDocument from 'components/document/AddDocument';
 import DomainView from 'components/domain/DomainView';
 import XFlowView from 'components/xflow/XFlowView';
+import FngroupView from 'components/fngroup/FngroupView';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -43,6 +44,9 @@ export default (props) => {
                 </Route>
                 <Route path={`${match.path}/xflow/:xflowId`}>
                   <XFlowView />
+                </Route>
+                <Route path={`${match.path}/fngroup/:fngroupId`}>
+                  <FngroupView />
                 </Route>
                 <Route path={match.path}>
                   <h3>Please select a document</h3>

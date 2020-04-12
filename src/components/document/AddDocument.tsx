@@ -37,6 +37,19 @@ const NEW_XFLOW = gql`
   }
 `;
 
+const NEW_FNGROUP = gql`
+  mutation NewFngroup($name: String!, $description: String, $projectId: Uuid!) {
+    addFngroup(doc: {
+      name: $name,
+      description: $description,
+      projectId: $projectId,
+    }) {
+      id
+      name
+    }
+  }
+`;
+
 export default function AddDocument() {
   const history = useHistory();
   const routeMatch = useRouteMatch();
@@ -61,6 +74,16 @@ export default function AddDocument() {
     }
   });
 
+  const [newFngroup, { /* data */ }] = useMutation(NEW_FNGROUP, {
+    update(cache, data) {
+      const addFngroup = data.data.addFngroup;
+      const projectId = routeMatch.params.projectId;
+      const newRoute = routes.fngroup(projectId, addFngroup.id);
+      // console.log('Route', newRoute);
+      history.push(newRoute);
+    }
+  });
+
   const onSubmit = function(values: NewDocumentFormData) {
     const doctype = values.doctype;
     console.error('onSubmit :', values);
@@ -80,6 +103,9 @@ export default function AddDocument() {
         break;
       case "domain":
         newDomain({ variables: data });
+        break;
+      case "fngroup":
+        newFngroup({ variables: data });
         break;
       default:
         console.error('Nope!');

@@ -17,4 +17,7 @@ export default {
   domain(projectId, id) {
     return `/project/${projectId}/domain/${id}`;
   },
+  fngroup(projectId, id) {
+    return `/project/${projectId}/fngroup/${id}`;
+  },
 }

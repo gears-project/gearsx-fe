@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import { Form } from 'react-final-form';
 import { Radios } from 'mui-rff';
 
+import doctypes from 'doctypes';
+
 export interface SelectDocumentTypeFormData {
 }
 
@@ -30,10 +32,7 @@ export function SelectDocumentType(props: SelectDocumentTypeFormProps) {
             label="Select one..."
             name="doctype"
             required={true}
-            data={[
-              {label: 'XFlow', value: 'xflow'},
-              {label: 'Domain', value: 'domain'}
-            ]}
+            data={doctypes}
           />
           <Button variant="outlined" type="submit" color="primary">
           Go
