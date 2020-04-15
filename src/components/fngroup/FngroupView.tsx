@@ -15,11 +15,22 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
+import FnList from 'components/fngroup/FnList';
+
 const QUERY = gql`
   query getFngroup($id: Uuid!) {
     fngroup(input: { documentId: $id }) {
       id
       name
+      body {
+        fns {
+          id
+          name
+          description
+          lang
+          body
+        }
+      }
     }
   }
 `;
@@ -110,6 +121,7 @@ export default ()=> {
         { fngroup.name }
       </TabPanel>
       <TabPanel value={value} index={1}>
+        <FnList fns={fngroup.body.fns} />
       </TabPanel>
     </div>
   );
