@@ -3,7 +3,6 @@ import React from 'react';
 import MaterialTable from "material-table";
 
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 
 import { useConfirm } from 'material-ui-confirm';
@@ -11,11 +10,10 @@ import { useConfirm } from 'material-ui-confirm';
 import Loading from 'components/Loading';
 import Error from 'components/Error';
 
-import {
-  useHistory,
-} from "react-router-dom";
+import { useHistory, } from "react-router-dom";
 
 import routes from 'routes';
+import { PROJECTS_LIST, DELETE_PROJECT, UPDATE_PROJECT } from 'gears-queries';
 
 import { format } from 'date-fns'
 
@@ -64,70 +62,6 @@ const columns = [
     cellStyle: numericStyle,
   },
 ];
-
-const PROJECTS_LIST = gql`
-query getProjects {
-  projects(paging:{limit:20}) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    model {
-      id
-      name
-      doctype
-      domains {
-        id
-        name
-        body {
-          events {
-            all {
-              id
-            }
-          }
-          entities {
-            id
-            name
-            attributes {
-              id
-              name
-              vtype {
-                __typename
-                ... on string {
-                  default
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`;
-
-const DELETE_PROJECT = gql`
-  mutation ($projectId: Uuid!) {
-    deleteProject(input: {
-      projectId: $projectId,
-    })
-  }
-`;
-
-const UPDATE_PROJECT = gql`
-  mutation ($id: Uuid!, $name: String!, $description: String) {
-    updateProject(input: {
-      id: $id,
-      name: $name,
-      description: $description
-    }) {
-      id,
-      name,
-      description
-    }
-  }
-`;
 
 export default ()=> {
 

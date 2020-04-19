@@ -40,11 +40,6 @@ const columns = [
     field: "name",
   },
   {
-    title: "Description",
-    field: "description",
-    render: rowData=> capString(rowData.description),
-  },
-  {
     title: "Language",
     field: "lang",
   },

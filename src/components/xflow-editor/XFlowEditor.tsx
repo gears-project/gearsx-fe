@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box';
 
 import IconButton from '@material-ui/core/IconButton';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import { FullScreen } from '@visuality.js/react-fullscreen';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 

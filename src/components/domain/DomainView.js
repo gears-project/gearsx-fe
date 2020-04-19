@@ -1,6 +1,5 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import EntityList from 'components/domain/EntityList';
 import ERDEditor from 'components/domain/ERDEditor';
 import Loading from 'components/Loading';
@@ -17,35 +16,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-const QUERY = gql`
-  query getDomain($id: Uuid!) {
-    domain(input: { documentId: $id }) {
-      id
-      name
-      body {
-        events {
-          all {
-            id
-          }
-        }
-        entities {
-          id
-          name
-          attributes {
-            id
-            name
-            vtype {
-              __typename
-              ... on string {
-                default
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { GET_DOMAIN_QUERY } from 'gears-queries';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -105,7 +76,7 @@ export default ()=> {
     setValue(newValue);
   };
 
-  const { loading, error, data } = useQuery(QUERY, {
+  const { loading, error, data } = useQuery(GET_DOMAIN_QUERY, {
     variables : {
       id : domainId,
     }
