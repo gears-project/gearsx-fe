@@ -16,6 +16,9 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from 'components/ToplevelNavlist';
 
+import { useAuth0 } from '../react-auth0-spa';
+import { Detector } from 'react-detect-offline';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +29,9 @@ import Projects from 'pages/Projects';
 import NewProject from 'pages/NewProject';
 import ProjectSidebar from 'components/project//ProjectSidebar';
 import ProjectView from 'pages/ProjectView';
+
+import Profile from 'components/Profile';
+import PrivateRoute from 'components/PrivateRoute';
 
 const drawerWidth = 240;
 
@@ -111,6 +117,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -119,6 +127,22 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Gears Dashboard
           </Typography>
+          <div>
+            <Detector
+              render={({ online }) => (
+                <div className={online ? "normal" : "warning"}>
+                  You are currently {online ? "online" : "offline"}
+                </div>
+              )}
+            />
+          </div>
+          <div>
+            {!isAuthenticated && (
+              <button onClick={() => loginWithRedirect({})}>Log in</button>
+            )}
+
+            {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+          </div>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
@@ -152,6 +176,9 @@ export default function Dashboard() {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="xl" className={classes.container}>
             <Switch>
+              <PrivateRoute path="/profile">
+                <Profile />
+              </PrivateRoute>
               <Route path="/projects">
                 <Projects />
               </Route>

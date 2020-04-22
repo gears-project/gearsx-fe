@@ -3,19 +3,42 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
+import { Auth0Provider } from "react-auth0-spa";
+import config from "auth_config.json";
+import history from "utils/history";
+
 import './styles/index.css';
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  // uri: '/graphql',
+  uri: 'http://gearsx.local/graphql',
 });
 
+
+// A function that routes the user to the right place
+// after login
+const onRedirectCallback = appState => {
+  history.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+};
+
 const TopLevelApp = () => (
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
+  <Auth0Provider
+    domain={config.domain}
+    client_id={config.clientId}
+    redirect_uri={window.location.origin}
+    onRedirectCallback={onRedirectCallback}
+  >
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </Auth0Provider>
 );
 
 ReactDOM.render(<TopLevelApp />, document.getElementById('root'));

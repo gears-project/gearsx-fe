@@ -5,8 +5,11 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Dashboard from 'components/Dashboard';
 import { ConfirmProvider } from 'material-ui-confirm';
 
+import { useAuth0 } from "react-auth0-spa";
+
 export default function() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const { loading } = useAuth0();
 
   const theme = React.useMemo(() =>
     createMuiTheme({
@@ -17,11 +20,16 @@ export default function() {
     [prefersDarkMode],
   );
 
-  return (
-    <ThemeProvider theme={theme}>
-      <ConfirmProvider>
-        <Dashboard />
-      </ConfirmProvider>
-    </ThemeProvider>
-  );
+
+  if (loading) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <ThemeProvider theme={theme}>
+        <ConfirmProvider>
+          <Dashboard />
+        </ConfirmProvider>
+      </ThemeProvider>
+    );
+  }
 }
