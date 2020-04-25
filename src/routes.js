@@ -20,4 +20,7 @@ export default {
   fngroup(projectId, id) {
     return `/project/${projectId}/fngroup/${id}`;
   },
+  fngroup_new_fn(projectId, fnGroupId, id) {
+    return `/project/${projectId}/fngroup/${fnGroupId}/fn/${id}`;
+  },
 }

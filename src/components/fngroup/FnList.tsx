@@ -11,6 +11,7 @@ import Loading from 'components/Loading';
 import Error from 'components/Error';
 
 import {
+  useRouteMatch,
   useHistory,
 } from "react-router-dom";
 
@@ -67,10 +68,26 @@ const UPDATE_FN = gql`
   }
 `;
 
+const ADD_FN = gql`
+  mutation ($projectId: Uuid!, $fngroupId: Uuid!) {
+    fngroupAddFn(
+    doc: {
+      projectId: $projectId,
+      documentId: $fngroupId,
+    },
+    input: {
+      name: "New function yo!"
+    }) {
+      id
+  }
+}`;
+
 export default (props)=> {
 
   const confirmDialog = useConfirm();
   const history = useHistory();
+  const routeMatch = useRouteMatch();
+
   const [deleteFn, { /* data */ }] = useMutation(DELETE_FN, {
     update(cache, data) {
       const newRoute = routes.fns();
@@ -84,6 +101,12 @@ export default (props)=> {
     }
   });
 
+  const [addFn, { /* data */ }] = useMutation(ADD_FN, {
+    update(cache, data) {
+      console.log('xxx', data);
+    }
+  });
+
   const fns = props.fns;
 
   function onRowClick(event, rowData) {
@@ -92,7 +115,17 @@ export default (props)=> {
   }
 
   function onAddClick(event) {
-    history.push(routes.new_fn());
+    const projectId = routeMatch.params.projectId;
+    const fngroupId = routeMatch.params.fngroupId;
+    addFn({
+      variables: {
+        projectId: projectId,
+        fnGroupId: fngroupId,
+      }
+    }).then((data)=> {
+      console.log(data);
+      history.push(routes.fngroup_new_fn(projectId, fngroupId, 1));
+    });
   }
 
   function onDeleteClick(event, rowData) {
