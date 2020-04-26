@@ -25,6 +25,8 @@ import {
   Route,
 } from "react-router-dom";
 
+import { config } from 'config';
+
 import Projects from 'pages/Projects';
 import NewProject from 'pages/NewProject';
 import ProjectSidebar from 'components/project//ProjectSidebar';
@@ -125,7 +127,7 @@ export default function Dashboard() {
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Gears Dashboard
+            { config.app.title }
           </Typography>
           <div>
             <Detector

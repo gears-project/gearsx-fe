@@ -1,5 +1,8 @@
 
 export const config = {
+  app : {
+    title: process.env.REACT_APP_APP_TITLE,
+  },
   graphql : {
     uri: process.env.REACT_APP_GRAPHQL_URI,
   },
