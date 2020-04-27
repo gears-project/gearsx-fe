@@ -111,7 +111,8 @@ export default (props)=> {
 
   function onRowClick(event, rowData) {
     const fnId = rowData.id;
-    history.push(routes.fn(fnId));
+    const { projectId, fngroupId } = routeMatch.params;
+    history.push(routes.fngroup_new_fn(projectId, fngroupId, fnId));
   }
 
   function onAddClick(event) {

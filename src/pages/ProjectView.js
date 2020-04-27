@@ -15,6 +15,7 @@ import AddDocument from 'components/document/AddDocument';
 import DomainView from 'components/domain/DomainView';
 import XFlowView from 'components/xflow/XFlowView';
 import FngroupView from 'components/fngroup/FngroupView';
+import FngroupFnView from 'components/fngroup/FngroupFnView';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -44,6 +45,9 @@ export default (props) => {
                 </Route>
                 <Route path={`${match.path}/xflow/:xflowId`}>
                   <XFlowView />
+                </Route>
+                <Route path={`${match.path}/fngroup/:fngroupId/fn/:fnId`}>
+                  <FngroupFnView />
                 </Route>
                 <Route path={`${match.path}/fngroup/:fngroupId`}>
                   <FngroupView />

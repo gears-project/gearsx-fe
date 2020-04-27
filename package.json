@@ -11,6 +11,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.45",
     "@material-ui/pickers": "^3.2.10",
+    "@monaco-editor/react": "^3.3.0",
     "@projectstorm/react-diagrams": "^6.0.2",
     "apollo-boost": "^0.4.7",
     "closest": "0.0.1",
