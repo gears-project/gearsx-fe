@@ -11,7 +11,9 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import MenuIcon from '@material-ui/icons/Menu';
+import WifiIcon from '@material-ui/icons/Wifi';
+import WifiOffIcon from '@material-ui/icons/WifiOff';
+import SupervisedUserIcon from '@material-ui/icons/SupervisedUserCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from 'components/ToplevelNavlist';
@@ -132,24 +134,28 @@ export default function Dashboard() {
           <div>
             <Detector
               render={({ online }) => (
-                <div className={online ? "normal" : "warning"}>
-                  You are currently {online ? "online" : "offline"}
-                </div>
+                <IconButton color={ online ? "inherit" : "secondary"}>
+                  {online ?  <WifiIcon /> : <WifiOffIcon /> }
+                </IconButton>
               )}
             />
           </div>
           <div>
             {!isAuthenticated && (
-              <button onClick={() => loginWithRedirect({})}>Log in</button>
+              <IconButton
+                color="secondary"
+                onClick={() => loginWithRedirect({})}>
+                <SupervisedUserIcon />
+              </IconButton>
             )}
-
-            {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+            {isAuthenticated && (
+              <IconButton
+                color="inherit"
+                onClick={() => logout()}>
+                <SupervisedUserIcon />
+              </IconButton>
+            )}
           </div>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Router>
@@ -178,9 +184,6 @@ export default function Dashboard() {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="xl" className={classes.container}>
             <Switch>
-              <PrivateRoute path="/profile">
-                <Profile />
-              </PrivateRoute>
               <Route path="/projects">
                 <Projects />
               </Route>
@@ -189,6 +192,9 @@ export default function Dashboard() {
               </Route>
               <Route path="/project/:projectId">
                 <ProjectView />
+              </Route>
+              <Route path="/">
+                <Profile />
               </Route>
             </Switch>
           </Container>

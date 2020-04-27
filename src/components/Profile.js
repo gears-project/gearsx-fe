@@ -1,11 +1,20 @@
 import React, { Fragment } from "react";
 import { useAuth0 } from "../react-auth0-spa";
+import Loading from 'components/Loading';
 
 const Profile = () => {
   const { loading, user } = useAuth0();
 
-  if (loading || !user) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!user) {
+    return (
+      <Fragment>
+        <span>Not logged in</span>
+      </Fragment>
+    );
   }
 
   return (
